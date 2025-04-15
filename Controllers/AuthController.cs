@@ -19,18 +19,8 @@ namespace HotelBookingAPI.API.Controllers
         {
             _authService = authService;
             _mapper = mapper;
-            _mapper = mapper;
         }
 
-        //[HttpPost("login")]
-        //[Consumes("application/json")]
-        //public async Task<IActionResult> Login([FromBody] UserLoginDto userDto)
-        //{
-        //    var user = await _authService.AuthenticateAsync(userDto.Email, userDto.Password);
-        //    if (user.Token == null) return Unauthorized(new { message = "Usuário ou senha inválidos" });
-
-        //    return Ok(new AuthResponseDto { Token = token });
-        //}
 
         [HttpPost("login")]
         [Consumes("application/json")]
@@ -50,8 +40,6 @@ namespace HotelBookingAPI.API.Controllers
                 Username = user.Username
             });
         }
-
-
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserLoginDto userDto)
