@@ -8,43 +8,44 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AutoMapper;
-using HotelBookingAPI.Application.Mappings; // Adicione esta linha
+using HotelBookingAPI.Application.Mappings; 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuração de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.SetIsOriginAllowed(origin => true) // Permite qualquer origem
+            builder.SetIsOriginAllowed(origin => true)
                    .AllowAnyHeader()
                    .AllowAnyMethod()
-                   .AllowCredentials(); // Se necessário para autenticação
+                   .AllowCredentials(); 
         });
 });
 
-// Configurar conexão com SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configurar repositórios
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
+builder.Services.AddScoped<IFlightRepository, FlightRepository>();
+builder.Services.AddScoped<ICarsRepository, CarsRepository>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<AccommodationService>();
+builder.Services.AddScoped<FlightSevice>();
+builder.Services.AddScoped<CarsService>();
 
-// Configurar AutoMapper
-builder.Services.AddAutoMapper(typeof(AuthMappingProfile)); // Substitua pelo seu perfil de mapeamento real
+builder.Services.AddAutoMapper(typeof(AuthMappingProfile));
 
-// Adicionar suporte a Controllers
 builder.Services.AddControllers();
 
-// 🚀 Configurar Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configurar autenticação JWT
+// autenticação JWT
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
 
@@ -67,19 +68,17 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// 🚀 Ativar Swagger apenas em ambiente de desenvolvimento
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowSpecificOrigin"); // Aplicar a política de CORS antes de mapear controllers
+app.UseCors("AllowSpecificOrigin"); 
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-// 🚀 Adicionar mapeamento de Controllers (para evitar erro)
 app.MapControllers();
 
 app.Run();
