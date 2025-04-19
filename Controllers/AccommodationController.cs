@@ -24,5 +24,10 @@ namespace HotelBookingAPI.Presentation.Controllers
             return await _accommodationServices.GetAllAccommodationAsync();
         }
 
+        [HttpGet("ofertas")]
+        public async Task<List<AccommodationDto>> GetFlightOfferAsync()
+        {
+            return await _accommodationServices.GetAccommodationOfferAsync();
+        }
     }
 }
