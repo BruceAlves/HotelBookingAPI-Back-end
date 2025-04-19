@@ -32,11 +32,13 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
 builder.Services.AddScoped<IFlightRepository, FlightRepository>();
 builder.Services.AddScoped<ICarsRepository, CarsRepository>();
+builder.Services.AddScoped<ITravelPackagesRepository, TravelPackagesRepository>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<AccommodationService>();
 builder.Services.AddScoped<FlightSevice>();
 builder.Services.AddScoped<CarsService>();
+builder.Services.AddScoped<TravelPackagesService>();
 
 builder.Services.AddAutoMapper(typeof(AuthMappingProfile));
 

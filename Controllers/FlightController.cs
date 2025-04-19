@@ -1,4 +1,5 @@
 ﻿using HotelBookingAPI.Application;
+using HotelBookingAPI.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,12 @@ namespace HotelBookingAPI.Presentation.Controllers
         public async Task<List<FlightDto>> GetFlight()
         {
             return await _flightSevice.GetAllFlightAsync();
+        }
+
+        [HttpGet("ofertas")]
+        public async Task<List<FlightDto>> GetFlightOfferAsync()
+        {
+            return await _flightSevice.GetFlightOfferAsync();
         }
 
     }
